@@ -1,14 +1,15 @@
 class ListsController < ApplicationController
   def new
-    # Viewへ渡すためのインスタンス変数に空のmodelオブジェクトを生成する。
     @list = List.new
   end
 
   def create
-    list = List.new(list_params)
-    list. save
-    # redirect_to '/top' を削除して、以下のコードに変更
-    redirect_to list_path(list.id)
+    @list = List.new(list_params)
+    if @list.save
+      redirect_to list_path(@list.id)
+    else
+      render :new
+    end
   end
 
   def index
